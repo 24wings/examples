@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        iframe {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <!--<video width="500" src="./100.mp4" controls webkit-playsinline playsinline>
+        
+    </video>
+    -->
+    <iframe name="myFrame" src="./child.html " frameborder="0 "></iframe>
+
+    <script>
+        window.onload = function() {
+            setTimeout(() => {
+                window.myFrame.play()
+            }, 20000)
+        }
+
+        try {
+
+            function exitFullscreen() {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    window.myFrame.document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.oRequestFullscreen) {
+                    document.oCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else {
+                    var docHtml = document.documentElement;
+                    var docBody = document.body;
+                    var videobox = document.getElementById('videobox');
+                    docHtml.style.cssText = " ";
+                    docBody.style.cssText = " ";
+                    videobox.style.cssText = " ";
+                    document.IsFullScreen = false;
+                }
+            }
+        } catch (e) {
+            if (e) alert(JSON.stringify(e));
+        }
+    </script>
+</body>
+
+</html>
