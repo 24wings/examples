@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <video src="./100.mp4" width="400" autoplay="autoplay"></video>
+    <button type="" onclick="fullScreen()" 　style="margin-bottom:300px;background:blue">全屏</button>
+    <script>
+        var stopTime = 10;
+        var stopTimmer;
+
+        function launchFullscreen(element) {
+            //此方法不可以在異步任務中執行，否則火狐無法全屏
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            } else if (element.oRequestFullscreen) {
+                element.oRequestFullscreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullScreen();
+            } else {
+
+                var docHtml = document.documentElement;
+                var docBody = document.body;
+                var videobox = document.getElementById('videobox');
+                var cssText = 'width:100%;height:100%;overflow:hidden;';
+                docHtml.style.cssText = cssText;
+                docBody.style.cssText = cssText;
+                videobox.style.cssText = cssText + ';' + 'margin:0px;padding:0px;';
+                document.IsFullScreen = true;
+
+            }
+        }
+
+        function fullScreen() {
+            let video = document.getElementsByTagName('video')[0];
+            launchFullscreen(video)
+        }
+        launchFullscreen(document.getElementsByTagName('video')[0]);
+
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+                window.myFrame.document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.oRequestFullscreen) {
+                document.oCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else {
+                var docHtml = document.documentElement;
+                var docBody = document.body;
+                var videobox = document.getElementById('videobox');
+                docHtml.style.cssText = "";
+                docBody.style.cssText = "";
+                videobox.style.cssText = "";
+                document.IsFullScreen = false;
+            }
+        }
+        window.onload = function() {
+            fullScreen();
+            setTimeout(function() {
+                try {
+                    // alert('parent')
+                    let video = document.getElementsByTagName('video')[0];
+
+                    alert('分享才能播放');
+                    stopTimmer = setInterval(function() {
+                        video.pause()
+                    }, 100);
+
+                    exitFullscreen();
+                } catch (e) {
+                    alert(JSON.stringify(e));
+                }
+            }, stopTime * 1000);
+
+        }
+
+        function play() {
+            let video = document.getElementsByTagName('video')[0];
+            clearInterval(stopTimmer);
+            video.play();
+        }
+    </script>
+
+</body>
+
+
+
+</html>
